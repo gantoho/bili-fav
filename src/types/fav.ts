@@ -6,4 +6,5 @@ export type Fav = {
   media_count: number
   mid: number
   title: string
+  children: any
 }

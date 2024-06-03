@@ -1,36 +1,27 @@
 <script setup lang='ts'>
-import { ref, onMounted } from 'vue'
+import { ref, toRefs } from 'vue'
 import { NSpace, NButton, NInput } from 'naive-ui'
 import FavList from '@/components/FavList.vue'
-import { useFav } from '@/hooks/useFav'
-import { Fav } from '@/types/fav'
+import { useUserStore } from '@/store/user';
+import { useFavStore } from '@/store/fav';
 
-const { upMidStatus, upMid, getFavList, getFavVideoList, getFavListRequest, getFavVideoListRequest } = useFav()
+const { upMid, upMidStatus } = toRefs(useUserStore())
+const { favList } = toRefs(useFavStore())
 
-const favList = ref<Fav[]>([])
-const favVideoList = ref<any[]>([])
+const biliId = ref<string>('')
 
-
-onMounted(() => {
-  favList.value = getFavList()
-  favVideoList.value = getFavVideoList()
-})
-
+const start = () => {
+  localStorage.setItem("upMid", biliId.value)
+  upMid.value = biliId.value
+}
 </script>
 
 <template>
-  <div class="start">
-    <n-space v-if="!upMidStatus">
-      <n-input v-model:value="upMid" size="tiny" placeholder="请输入BiliID"/>
-      <n-button type="primary" size="tiny" @click="getFavListRequest">Start</n-button>
-    </n-space>
-    <FavList
-      v-else
-      :favList
-      :favVideoList
-      :getFavVideoListRequest
-    />
-  </div>
+  <n-space v-if="!upMidStatus">
+    <n-input v-model:value="biliId" size="tiny" placeholder="请输入BiliID"/>
+    <n-button type="primary" size="tiny" @click="start">Start</n-button>
+  </n-space>
+  <FavList v-else :favList />
 </template>
 
 <style lang='scss' scoped>

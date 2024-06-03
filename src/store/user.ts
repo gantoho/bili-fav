@@ -1,27 +1,28 @@
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
   const upMid = ref<string>('')
+  const upMidStatus = ref<boolean>(false) 
 
-  const setUpMid = (up_mid: string) => {
-    upMid.value = up_mid
-  }
-
-  const getUpMid = (): string | null => {
-    return upMid.value.trim() !== '' ? upMid.value : null 
-  }
+  watch(upMid, (newUpMid) => {
+    if (newUpMid.trim() !== '') {
+      upMidStatus.value = true
+      return
+    }
+    upMidStatus.value = false
+  })
 
   onMounted(() => {
     const upMidStorage = localStorage.getItem('upMid')
     if (!upMidStorage) {
       return
     }
-    setUpMid(upMidStorage)
+    upMid.value = upMidStorage
   })
 
   return {
-    getUpMid,
-    setUpMid
+    upMid,
+    upMidStatus
   }
 })
