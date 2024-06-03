@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import FavList from '@/pages/FavList.vue'
 import { NMessageProvider } from 'naive-ui';
+import Start from '@/pages/Start.vue'
 </script>
 
 <template>
   <n-message-provider>
-    <FavList/>
+    <Start/>
   </n-message-provider>
 </template>
 
