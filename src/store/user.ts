@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', () => {
       return
     }
     upMidStatus.value = false
+    localStorage.setItem('upMid', newUpMid)
   })
 
   onMounted(() => {

@@ -5,7 +5,7 @@ const env = import.meta.env
 export const request = <T = { code: number; data: any; msg: string }>(requestConfig: AxiosRequestConfig): Promise<T> => {
   const instance = axios.create({
     baseURL: env.VITE_APP_URL,
-    timeout: 5000
+    timeout: 10000
   })
   
   instance.interceptors.request.use(
