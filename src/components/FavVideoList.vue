@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { watch, ref } from 'vue'
 import FavVideoListItem from '@/components/FavVideoListItem.vue'
-import draggable from 'vuedraggable'
+// import draggable from 'vuedraggable'
 
 const favVideoList = defineModel<any>('favVideoList')
 const favVideoListBackup = ref<any>()
@@ -12,11 +12,14 @@ watch(favVideoList, (newValue) => {
 </script>
 
 <template>
-  <draggable :list="favVideoListBackup" itemKey="id" tag="div" class="fav-video-list"  animation="300">
+  <!-- <draggable :list="favVideoListBackup" itemKey="id" tag="div" class="fav-video-list"  animation="300">
     <template #item="{ element }">
       <FavVideoListItem :favVideoListItem="element" />
     </template>
-  </draggable>
+  </draggable> -->
+  <div class="fav-video-list">
+    <FavVideoListItem v-for="(item) in favVideoListBackup" :key="item.id" :favVideoListItem="item" />
+  </div>
 </template>
 
 <style lang='scss' scoped>
